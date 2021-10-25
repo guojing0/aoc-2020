@@ -7,6 +7,6 @@
 	      (loop for line in *map*  collect
 				       (eql #\# (elt line
 						     (rem (* 3 (position line *map*))
-				       *map-width*))))))
+							  *map-width*))))))
 
 ;; A more mathematical solution for the rest...
