@@ -1,5 +1,4 @@
-(ql:quickload :split-sequence)
-(ql:quickload :alexandria)
+(ql:quickload '("split-sequence" "alexandria"))
 
 (print (count-if
 	(lambda (pswd-line)
