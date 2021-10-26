@@ -10,3 +10,13 @@
 							 *map-width*))))))
 
 ;; A more mathematical solution for the rest...
+(defun travel (curr-x curr-y x-dir y-dir)
+  (if (< curr-y *map-length*)
+      (+ (travel (+ curr-x x-dir) (+ curr-y y-dir) x-dir y-dir)
+	 (if (eql #\# (elt (nth curr-y *map*) (rem curr-x *map-width*)))
+	     1
+	     0))
+      0))
+
+(print (reduce #'* (loop for slope in '((1 . 1) (3 . 1) (5 . 1) (7 . 1) (1 . 2))
+			 collect (travel 0 0 (car slope) (cdr slope)))))
