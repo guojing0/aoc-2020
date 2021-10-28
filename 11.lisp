@@ -50,18 +50,19 @@
 	  sum (if (eql #\# (aref (elt map (first seat))
 				 (second seat)))
 		  1
-		  0) into count 	;; sum (count #\# seat)?
+		  0) into count
 	  finally (return (>= count 4)))))
 
 (defun count-people (map)
   (loop for row in map
 	sum (count #\# row)))
 
-(print (let ((ans (update-round *seat-map*))
-	     (counter 0))
-	 (loop do (progn
-		    (setf ans (update-round ans))
-		    (if (/= counter (count-people ans))
-			(setf counter (count-people ans))
-			(return counter)))
-	       finally (return counter))))
+(defun solve-first-part ()
+  (let ((ans (update-round *seat-map*))
+	(counter 0))
+    (loop do (progn
+	       (setf ans (update-round ans))
+	       (if (/= counter (count-people ans))
+		   (setf counter (count-people ans))
+		   (return counter)))
+	  finally (return counter))))
