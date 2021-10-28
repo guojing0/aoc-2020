@@ -5,7 +5,7 @@
 		    (cdr (nthcdr (1- (length place))
 				 place)))))
 
-(defun extend-map-with-floor (map)
+(defun add-boundaries (map)
   (let* ((floor-row (make-string (+ 2 (length (car map)))
 				 :initial-element #\.))
 	 (enlarged-map (loop for row in map
@@ -14,9 +14,14 @@
     (push-extend floor-row enlarged-map)
     enlarged-map))
 
+(defun remove-boundaries (map)
+  (let ((new-map (loop for row in map
+		       collect (subseq row 1 (1- (length row))))))
+    (subseq new-map 1 (1- (length map)))))
+
 (defun update-round (map)
-  (loop with enlarged-map = (extend-map-with-floor map)
-	with result-map = (extend-map-with-floor map)
+  (loop with enlarged-map = (add-boundaries map)
+	with result-map = (add-boundaries map)
 	for r from 0
 	for row in enlarged-map
 	do (loop for seat across row
@@ -26,7 +31,7 @@
 			       (setf (aref (elt result-map r) c) #\#)))
 		      (#\# (if (leave-p r c enlarged-map)
 			       (setf (aref (elt result-map r) c) #\L)))))
-	finally (return result-map)))
+	finally (return (remove-boundaries result-map))))
 
 (defun occupy-p (row col map)
   (let ((adjacent-seats
