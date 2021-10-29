@@ -33,7 +33,7 @@
 			       (setf (aref (elt result-map r) c) #\L)))))
 	finally (return (remove-boundaries result-map))))
 
-(defun occupy-p (row col map)
+(defun count-adjacent (status row col map)
   (let ((adjacent-seats
 	  (loop for direction in '((1 0) (-1 0)
 				   (0 1) (0 -1)
@@ -41,22 +41,18 @@
 				   (1 -1) (-1 1))
 		collect (mapcar #'+ (list row col) direction))))
     (loop for seat in adjacent-seats
-	  never (eql #\# (aref (elt map (first seat))
-			       (second seat))))))
+	  sum (if (eql status (aref (elt map (first seat))
+				    (second seat)))
+		  1
+		  0) into counter
+	  finally (return counter))))
+
+
+(defun occupy-p (row col map)
+  (zerop (count-adjacent #\# row col map)))
 
 (defun leave-p (row col map)
-  (let ((adjacent-seats
-	  (loop for direction in '((1 0) (-1 0)
-				   (0 1) (0 -1)
-				   (1 1) (-1 -1)
-				   (1 -1) (-1 1))
-		collect (mapcar #'+ (list row col) direction))))
-    (loop for seat in adjacent-seats
-	  sum (if (eql #\# (aref (elt map (first seat))
-				 (second seat)))
-		  1
-		  0) into count
-	  finally (return (>= count 4)))))
+  (>= (count-adjacent #\# row col map) 4))
 
 (defun count-people (map)
   (loop for row in map
