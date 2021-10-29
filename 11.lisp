@@ -1,4 +1,4 @@
-(defparameter *seat-map* (uiop:read-file-lines "day11.txt"))
+(defparameter *map* (uiop:read-file-lines "day11.txt"))
 
 (defun push-extend (item place)
   (setf place (push item
@@ -46,7 +46,6 @@
 		  1
 		  0) into counter
 	  finally (return counter))))
-
 
 (defun occupy-p (row col map)
   (zerop (count-adjacent #\# row col map)))
