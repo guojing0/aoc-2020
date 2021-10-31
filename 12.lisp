@@ -30,3 +30,11 @@
 
       (#\F (travel (cons (get-direction *direction*)
                          amount))))))
+
+(defun manhattan-dist (loc)
+  (reduce #'+ (mapcar #'abs loc)))
+
+(defun solve-first-part ()
+  (loop for i in (gen-instrs *instrs*)
+        do (travel i))
+  (manhattan-dist *location*))
