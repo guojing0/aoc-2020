@@ -2,7 +2,7 @@
 
 (defparameter *answers*
   (cl-ppcre:split "\\n\\n"
-		  (alexandria:read-file-into-string "day6.txt")))
+		  (alexandria:read-file-into-string "input/day6.txt")))
 
 ;; Part I
 

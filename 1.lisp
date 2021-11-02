@@ -1,6 +1,6 @@
 (defparameter *numbers*
   (mapcar #'parse-integer
-	  (uiop:read-file-lines "day1.txt")))
+	  (uiop:read-file-lines "input/day1.txt")))
 
 (loop named top
       for x in *numbers* do

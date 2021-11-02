@@ -12,7 +12,7 @@
 		(flet ((in-range (n min max)
 			 (and (>= n min) (<= n max))))
 		  (in-range (count ch pswd) min-range max-range))))))
-	(uiop:read-file-lines "day2.txt")))
+	(uiop:read-file-lines "input/day2.txt")))
 
 
 (print (count-if
@@ -24,4 +24,4 @@
 	      (let ((ch (find-if #'alpha-char-p ch-colon)))
 		(alexandria:xor (eql ch (elt pswd (1- (parse-integer first-pos))))
 				(eql ch (elt pswd (1- (parse-integer second-pos)))))))))
-	(uiop:read-file-lines "day2.txt")))
+	(uiop:read-file-lines "input/day2.txt")))

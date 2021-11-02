@@ -1,5 +1,5 @@
-(defparameter *map* (uiop:read-file-lines "day11.txt"))
-(defparameter *small-map* (uiop:read-file-lines "day11-small.txt"))
+(defparameter *map* (uiop:read-file-lines "input/day11.txt"))
+(defparameter *small-map* (uiop:read-file-lines "input/day11-small.txt"))
 
 (defun push-extend (item place)
   (setf place (push item

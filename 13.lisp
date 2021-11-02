@@ -1,6 +1,6 @@
 (ql:quickload :split-sequence)
 
-(defparameter *note* (uiop:read-file-lines "day13.txt"))
+(defparameter *note* (uiop:read-file-lines "input/day13.txt"))
 (defparameter *depart-time* (parse-integer (first *note*)))
 (defparameter *bus-ids* (second *note*))
 (defparameter *all-bus-ids* (all-bus-ids *bus-ids*))

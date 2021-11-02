@@ -1,6 +1,6 @@
 (ql:quickload '("cl-ppcre" "alexandria"))
 
-(defparameter *boot-code* (uiop:read-file-lines "day8.txt"))
+(defparameter *boot-code* (uiop:read-file-lines "input/day8.txt"))
 
 (defun instr-to-symbol (str)
   (alexandria:eswitch (str :test #'string=)

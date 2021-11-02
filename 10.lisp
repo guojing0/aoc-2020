@@ -2,7 +2,7 @@
 
 (defparameter *output* (cons 0
 			     (sort (mapcar #'parse-integer
-					   (uiop:read-file-lines "day10.txt"))
+					   (uiop:read-file-lines "input/day10.txt"))
 				   #'<)))
 
 (let* ((data (append *output*

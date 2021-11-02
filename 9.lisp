@@ -1,4 +1,4 @@
-(defparameter *numbers* (mapcar #'parse-integer (uiop:read-file-lines "day9.txt")))
+(defparameter *numbers* (mapcar #'parse-integer (uiop:read-file-lines "input/day9.txt")))
 
 (defun in-sums-p (n sums)
   (loop for row in sums

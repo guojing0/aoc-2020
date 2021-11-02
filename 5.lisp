@@ -1,4 +1,4 @@
-(defparameter *boarding-passes* (uiop:read-file-lines "day5.txt"))
+(defparameter *boarding-passes* (uiop:read-file-lines "input/day5.txt"))
 
 (defun modify (pass)
   (nsubstitute #\1 #\B pass)

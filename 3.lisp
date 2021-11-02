@@ -1,4 +1,4 @@
-(defparameter *map* (uiop:read-file-lines "day3.txt"))
+(defparameter *map* (uiop:read-file-lines "input/day3.txt"))
 (defparameter *map-width* (length (car *map*)))
 (defparameter *map-length* (length *map*))
 
