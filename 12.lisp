@@ -1,6 +1,6 @@
-(defparameter *instrs* (uiop:read-file-lines "day12.txt"))
-(defparameter *location* (make-list 2 :initial-element 0))
-(defparameter *direction* 0) 
+;; Incomplete solution; the idea is right.
+
+(defparameter *instrs* (uiop:read-file-lines "input/day12.txt"))
 
 (defun gen-instrs (instrs)
   (mapcar #'(lambda (instr)
@@ -8,33 +8,31 @@
                     (parse-integer instr :start 1)))
           instrs))
 
-(defun get-direction (dir)
-  (let ((std-dir (mod dir 360)))
-    (case std-dir
-      (0 #\E)
-      (90 #\N)
-      (180 #\W)
-      (270 #\S))))
+(defun rotate (waypoint deg)
+  (if (zerop deg)
+      waypoint
+      (rotate (cons (cdr waypoint) (- (car waypoint)))
+              (- deg 90))))
 
-(defun travel (instr)
+(defun forward-by-waypoint (loc waypoint delta)
+  (cons (+ (car loc) (* delta (car waypoint)))
+        (+ (cdr loc) (* delta (cdr waypoint)))))
+
+(defun travel (instr ship waypoint)
   (let ((action (car instr))
         (amount (cdr instr)))
     (case action
-      (#\E (incf (first *location*) amount))
-      (#\W (decf (first *location*) amount))
-      (#\N (incf (second *location*) amount))
-      (#\S (decf (second *location*) amount))
+      (#\E (incf (car waypoint) amount))
+      (#\W (decf (car waypoint) amount))
+      (#\N (incf (cdr waypoint) amount))
+      (#\S (decf (cdr waypoint) amount))
 
-      (#\L (incf *direction* amount))
-      (#\R (decf *direction* amount))
+      (#\L (setf waypoint (rotate waypoint (- 360 amount))))
+      (#\R (setf waypoint (rotate waypoint amount)))
 
-      (#\F (travel (cons (get-direction *direction*)
-                         amount))))))
+      (#\F (setf ship (forward-by-waypoint ship
+                                           waypoint
+                                           amount))))))
 
 (defun manhattan-dist (loc)
-  (reduce #'+ (mapcar #'abs loc)))
-
-(defun solve-first-part ()
-  (loop for i in (gen-instrs *instrs*)
-        do (travel i))
-  (manhattan-dist *location*))
+  (+ (abs (car loc)) (abs (cdr loc))))
