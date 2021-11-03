@@ -35,15 +35,29 @@
                                          (parse-integer (string m))
                                          n))))
 
-(defun run-instrs (instrs)
+(defun second-masking (number mask)
+  (bit-vector->integer (loop for n across (integer->bit-vector 36 number)
+                             for m across mask
+                             collect (ecase (parse-integer (string m) :junk-allowed t)
+                                       (0 n)
+                                       (1 1)
+                                       (nil \.\.\.)))))
+
+(defun run-instrs (masking instrs)
   (loop with mem = (make-hash-table)
         with mask = nil
         for (addr . val) in instrs
         do (if (eql addr 'mask)
                (setf mask val)
-               (setf (gethash addr mem) (masking val mask)))
+               (setf (gethash addr mem) (funcall masking val mask)))
         finally (return mem)))
 
 (defun solve-first-part (instrs)
-  (loop for k being the hash-value of (run-instrs (load-all-instrs instrs))
+  (loop for k being the hash-value of (run-instrs #'masking
+                                                  (load-all-instrs instrs))
+        sum k))
+
+(defun solve-second-part (instrs)
+  (loop for k being the hash-value of (run-instrs #'second-masking
+                                                  (load-all-instrs instrs))
         sum k))
